@@ -117,3 +117,4 @@ def gain(ent, inf):
 print(f"Info: {func_inf}")
 print(f"EntropD: {entropiaD}")
 print(f"Gain: {gain(entropiaD, func_inf)}")
+halo = ("halo")

@@ -15,7 +15,7 @@ class wezel:
             childrens += "    " * self.level
             childrens += f"{child}"
         node = (
-            f" Attribute a{self.attribute + 1}:"
+            f" Attribute a{self.attribute}:"
             if self.attribute is not None
             else f" Decision: {self.decision}"
         )
@@ -35,7 +35,7 @@ def wczytaj_dane(nazwa_pliku):
     return dane
 
 # Przykładowe użycie funkcji
-nazwa_pliku = 'gieldaLiczby.txt'
+nazwa_pliku = 'car.data'
 tablica_danych = wczytaj_dane(nazwa_pliku)
 #print(tablica_danych)
 
@@ -130,7 +130,10 @@ def funkcja_informacji(praw, dane):
 def gain(ent, inf):
     gain_tab = []
     for gain_elem in inf.values():
-        gain_tab.append(ent-gain_elem)
+        if ent - gain_elem >=0:
+            gain_tab.append(ent-gain_elem)
+        else:
+            gain_tab.append(0)
     return gain_tab
 
 
@@ -150,8 +153,11 @@ def gainRatio(gain,splitInfo):
     for i in gain:
         if splitInfo[index] != 0:
             gainR.append(i/splitInfo[index])
+        else:
+            gainR.append(0)
         index += 1
     return gainR
+
 
 #Ratio = gainRatio(gain, splitInfo)
 #print(f"GainRatio: {Ratio}")
@@ -213,18 +219,16 @@ def createNode(dane, value = None, level = 0):
     ratio = wynik["Ratio"]
     uniqueValues = wynik["Unique_values"]
     print(f"ratio: {ratio}")
-    if ratio:
+    if ratio[bestIndex] != 0:
         n.attribute = bestIndex
-        for value in uniqueValues[bestIndex]:
+        for value in uniqueValues:
             subTab = [row for row in dane if row[bestIndex] == value]
-            child = createNode(subTab,value,level+1)
+            child = createNode(subTab, value, level+1)
             n.potomki.append(child)
     else:
         n.decision = dane[0][-1]
 
     return n
-
-
 
 
 tree = createNode(tablica_danych)

@@ -35,7 +35,7 @@ def wczytaj_dane(nazwa_pliku):
     return dane
 
 # Przykładowe użycie funkcji
-nazwa_pliku = 'car.data'
+nazwa_pliku = 'breast-cancer.data'
 tablica_danych = wczytaj_dane(nazwa_pliku)
 #print(tablica_danych)
 
@@ -109,7 +109,7 @@ def funkcja_informacji(praw, dane):
     index = 0
     wynik = {}
     for slownik in praw:
-        print(slownik)
+        #print(slownik)
         funcInf = 0
 
         for klucz, wartosc in slownik.items():
@@ -191,10 +191,11 @@ def licz(dane):
     prawdopodobienstwoDecyzyjnej = oblicz_prawdopodobienstwo(dicArray)
     entropiaD = entropia(*prawdopodobienstwoDecyzyjnej[len(prawdopodobienstwoDecyzyjnej) - 1].values())
     func_inf = funkcja_informacji(prawdopodobienstwoDecyzyjnej, tablica_danych)
+
     splitInfo = []
     for i in prawdopodobienstwoDecyzyjnej:
         splitInfo.append(entropia(*i.values()))
-    gain(entropiaD, func_inf)
+    g = gain(entropiaD, func_inf)
     Ratio = gainRatio(gain(entropiaD, func_inf), splitInfo) #toooo najlepsze Ratio
     index = indeks_najwyzszej_wartosci(Ratio) #toooo index najlepszego ratio
     uniqueValues = pobierz_klucze_słownika(dicArray, index) #tooo wartości uniwersalne węzłów
@@ -202,6 +203,8 @@ def licz(dane):
         "Ratio" : Ratio,
         "Index" : index,
         "Unique_values": uniqueValues,
+        "FuncInf": func_inf,
+        "Gain": g
     }
 
 
@@ -215,16 +218,41 @@ def createNode(dane, value = None, level = 0):
     n.level = level
 
     wynik = licz(dane)
+
     bestIndex = wynik["Index"]
     ratio = wynik["Ratio"]
     uniqueValues = wynik["Unique_values"]
-    print(f"ratio: {ratio}")
+    infres = wynik["FuncInf"]
+    gain = wynik["Gain"]
+
+    if level == 0:
+        index = 0
+        for i in infres:
+            print(f"Info(a{index}, T): {infres[index]}")
+            index += 1
+        index = 0
+        print(f"\n")
+
+        for i in gain:
+            print(f"Gain(a{index}, T): {gain[index]}")
+            index += 1
+        index = 0
+        print(f"\n")
+
+        for i in infres:
+            print(f"GainRatio(a{index}, T): {ratio[index]}")
+            index += 1
+
+        print(f"\n")
+
+
     if ratio[bestIndex] != 0:
         n.attribute = bestIndex
         for value in uniqueValues:
             subTab = [row for row in dane if row[bestIndex] == value]
             child = createNode(subTab, value, level+1)
             n.potomki.append(child)
+
     else:
         n.decision = dane[0][-1]
 

@@ -1,4 +1,5 @@
 import math
+import numpy as np
 
 class wezel:
     def __init__(self):
@@ -12,17 +13,17 @@ class wezel:
         childrens = ""
         for child in self.potomki:
             childrens += "\n    "
-            childrens += "    " * self.level
+            childrens += "       " * self.level
             childrens += f"{child}"
         node = (
-            f" Attribute a{self.attribute}:"
+            f" Attribute a{self.attribute + 1}:"
             if self.attribute is not None
-            else f" Decision: {self.decision}"
+            else f" D: {self.decision}"
         )
         value = (
-            f" Value: {self.value} ->" if self.value is not None else f" Value: Root ->"
+            f" {self.value} ->" if self.value is not None else f" Value: Root ->"
         )
-        return f"└─ Node {self.level}:{value}{node}{childrens}"
+        return f"└─ {value}{node}{childrens}"
 
 
 def wczytaj_dane(nazwa_pliku):
@@ -82,12 +83,12 @@ def oblicz_prawdopodobienstwo(lista_slownikow):
         wynik.append(prawdopodobienstwo)
     return wynik
 
-#prawdopodobienstwoDecyzyjnej = oblicz_prawdopodobienstwo(dicArray)
-#print(f"Prawdopodobieństwo: {prawdopodobienstwoDecyzyjnej}")
+#prawdopodobienstwoWszystkichSlowników = oblicz_prawdopodobienstwo(dicArray)
+#print(f"Prawdopodobieństwo: {prawdopodobienstwoWszystkichSlowników}")
 
 
 #entropia kolumny decyzyjnej
-#entropiaD = entropia(*prawdopodobienstwoDecyzyjnej[len(prawdopodobienstwoDecyzyjnej)-1].values())
+#entropiaD = entropia(*prawdopodobienstwoWszystkichSlowników[len(prawdopodobienstwoWszystkichSlowników)-1].values())
 #print(f"Entropia decyzyjna: {entropiaD}")
 #mała entropia
 def znajdz_wartosci(tabela, wartosc, index_kolumny):
@@ -105,7 +106,7 @@ def znajdz_wartosci(tabela, wartosc, index_kolumny):
 #print("Słownik wartości z ostatniej kolumny dla wartości", szukana_wartosc, "w kolumnie", index_kolumny, "to:")
 #print(wynik)
 
-def funkcja_informacji(praw, dane):
+def funkcja_informacji(praw, dane): #DOBRZE LICZY
     index = 0
     wynik = {}
     for slownik in praw:
@@ -113,8 +114,21 @@ def funkcja_informacji(praw, dane):
         funcInf = 0
 
         for klucz, wartosc in slownik.items():
-            funcInf += wartosc * entropia(*oblicz_p(znajdz_wartosci(dane, klucz, index)).values())#entropia
-        #print(f"Wynik{index}: {funcInf}\n")
+            #ent powinno być liczone z ostatniej kolumny dane
+            #z danych liczymy prawdopodobieństwo
+
+
+            #TUTAJ POSPLITUJ TABELĘ, aby policzyć entropie decyzyjnej dla tabeli
+            subTab = [row for row in dane if row[index] == klucz]
+            print(f"Podtabela Entropii: {subTab}")
+
+
+            praw = oblicz_prawdopodobienstwo(wystapienia_kolumn(dane))
+
+            #print(f'HALO {praw}')
+            ent = entropia(*praw[len(praw)-1].values())
+            funcInf += wartosc * ent#entropia
+        #rint(f"Wynik a{index}: {funcInf}")
 
         if index == len(praw)-1:
             return wynik
@@ -125,7 +139,7 @@ def funkcja_informacji(praw, dane):
 
 
 
-#func_inf = funkcja_informacji(prawdopodobienstwoDecyzyjnej, tablica_danych)
+#func_inf = funkcja_informacji(prawdopodobienstwoWszystkichSlowników, tablica_danych)
 
 def gain(ent, inf):
     gain_tab = []
@@ -142,7 +156,7 @@ def gain(ent, inf):
 #gain = gain(entropiaD, func_inf)
 #print(f"Gain: {gain}")
 #splitInfo = []
-#for i in prawdopodobienstwoDecyzyjnej:
+#for i in prawdopodobienstwoWszystkichSlowników:
    # splitInfo.append(entropia(*i.values()))
 
 #print(f"Split info: {splitInfo}")
@@ -188,15 +202,33 @@ def pobierz_klucze_słownika(tablica, indeks_słownika):
 
 def licz(dane):
     dicArray = wystapienia_kolumn(dane)
-    prawdopodobienstwoDecyzyjnej = oblicz_prawdopodobienstwo(dicArray)
-    entropiaD = entropia(*prawdopodobienstwoDecyzyjnej[len(prawdopodobienstwoDecyzyjnej) - 1].values())
-    func_inf = funkcja_informacji(prawdopodobienstwoDecyzyjnej, tablica_danych)
+    prawdopodobienstwoWszystkichSlowników = oblicz_prawdopodobienstwo(dicArray)
 
+
+    #TUTAJ problem z prawdopodobieństwem
+
+
+
+    print(prawdopodobienstwoWszystkichSlowników)
+    #print(oblicz_p(dicArray))
+    entropiaD = entropia(*prawdopodobienstwoWszystkichSlowników[len(prawdopodobienstwoWszystkichSlowników) - 1].values()) #entropia decyzynjej
+    print(f"Prawdopodobieństwo do Entropii: {prawdopodobienstwoWszystkichSlowników[len(prawdopodobienstwoWszystkichSlowników) - 1].values()}")
+    praw = []
+    for i in prawdopodobienstwoWszystkichSlowników:
+        ent = entropia(*i.values())
+        praw.append(ent)
+    #print(f"Lista prawdopodobieństw:{praw}")
+    print(f"EntropiaD(id{len(prawdopodobienstwoWszystkichSlowników) - 1}): {entropiaD}")
+    func_inf = funkcja_informacji(prawdopodobienstwoWszystkichSlowników, tablica_danych)
+    print(f"Func_inf: {func_inf}")
+   # f1 = funkcja_informacji(oblicz_p(),tablica_danych)
     splitInfo = []
-    for i in prawdopodobienstwoDecyzyjnej:
+    for i in prawdopodobienstwoWszystkichSlowników:
         splitInfo.append(entropia(*i.values()))
+
     g = gain(entropiaD, func_inf)
-    Ratio = gainRatio(gain(entropiaD, func_inf), splitInfo) #toooo najlepsze Ratio
+    print(f"Gain: {g}\n")
+    Ratio = gainRatio(g, splitInfo) #toooo najlepsze Ratio
     index = indeks_najwyzszej_wartosci(Ratio) #toooo index najlepszego ratio
     uniqueValues = pobierz_klucze_słownika(dicArray, index) #tooo wartości uniwersalne węzłów
     return{
@@ -225,24 +257,24 @@ def createNode(dane, value = None, level = 0):
     infres = wynik["FuncInf"]
     gain = wynik["Gain"]
 
-    if level == 0:
+    if level < 0:
         index = 0
+        print(f"LEVEL: {level}")
         for i in infres:
-            print(f"Info(a{index}, T): {infres[index]}")
+            print(f"Info(a{index + 1}): {infres[index]}")
             index += 1
         index = 0
         print(f"\n")
 
         for i in gain:
-            print(f"Gain(a{index}, T): {gain[index]}")
+            print(f"Gain(a{index + 1}): {gain[index]}")
             index += 1
         index = 0
         print(f"\n")
 
         for i in infres:
-            print(f"GainRatio(a{index}, T): {ratio[index]}")
+            print(f"GainRatio(a{index + 1}): {ratio[index]}")
             index += 1
-
         print(f"\n")
 
 
@@ -250,6 +282,9 @@ def createNode(dane, value = None, level = 0):
         n.attribute = bestIndex
         for value in uniqueValues:
             subTab = [row for row in dane if row[bestIndex] == value]
+            print(f"Podtabela: ")
+            for row in subTab:
+                print(row)
             child = createNode(subTab, value, level+1)
             n.potomki.append(child)
 

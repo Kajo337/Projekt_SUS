@@ -1,5 +1,4 @@
 import math
-import numpy as np
 
 class wezel:
     def __init__(self):
@@ -16,7 +15,7 @@ class wezel:
             childrens += "       " * self.level
             childrens += f"{child}"
         node = (
-            f" Attribute a{self.attribute + 1}:"
+            f"Attribute a{self.attribute + 1}:"
             if self.attribute is not None
             else f" D: {self.decision}"
         )
@@ -38,7 +37,6 @@ def wczytaj_dane(nazwa_pliku):
 # Przykładowe użycie funkcji
 nazwa_pliku = 'breast-cancer.data'
 tablica_danych = wczytaj_dane(nazwa_pliku)
-#print(tablica_danych)
 
 def wystapienia_kolumn(tab):
     dicArray = []
@@ -56,22 +54,12 @@ def wystapienia_kolumn(tab):
 
     return dicArray
 
-#dicArray = wystapienia_kolumn(tablica_danych)
-#print(f"Tablicz słowników: {dicArray}")
-
 def entropia(*args):
     entP = 0
     for arg in args:
         entP += arg * math.log(arg,2)
     entP *= -1
     return entP
-
-def oblicz_p(slownik):
-    suma_zdarzen = sum(slownik.values())
-    prawdopodobienstwo = {}
-    for key, value in slownik.items():
-        prawdopodobienstwo[key] = value / suma_zdarzen
-    return prawdopodobienstwo
 
 def oblicz_prawdopodobienstwo(lista_slownikow):
     wynik = []
@@ -83,14 +71,6 @@ def oblicz_prawdopodobienstwo(lista_slownikow):
         wynik.append(prawdopodobienstwo)
     return wynik
 
-#prawdopodobienstwoWszystkichSlowników = oblicz_prawdopodobienstwo(dicArray)
-#print(f"Prawdopodobieństwo: {prawdopodobienstwoWszystkichSlowników}")
-
-
-#entropia kolumny decyzyjnej
-#entropiaD = entropia(*prawdopodobienstwoWszystkichSlowników[len(prawdopodobienstwoWszystkichSlowników)-1].values())
-#print(f"Entropia decyzyjna: {entropiaD}")
-#mała entropia
 def znajdz_wartosci(tabela, wartosc, index_kolumny):
     wyniki = {}
     for wiersz in tabela:
@@ -99,36 +79,22 @@ def znajdz_wartosci(tabela, wartosc, index_kolumny):
             wyniki[ostatnia_wartosc] = wyniki.get(ostatnia_wartosc, 0) + 1
     return wyniki
 
-
-#szukana_wartosc = 1
-#index_kolumny = 1
-#wynik = znajdz_wartosci_i_indeksy(tablica_danych, szukana_wartosc, index_kolumny)
-#print("Słownik wartości z ostatniej kolumny dla wartości", szukana_wartosc, "w kolumnie", index_kolumny, "to:")
-#print(wynik)
-
-def funkcja_informacji(praw, dane): #DOBRZE LICZY
+test = 0
+def funkcja_informacji(praw, dane):
+    global test
     index = 0
     wynik = {}
+
     for slownik in praw:
-        #print(slownik)
         funcInf = 0
 
         for klucz, wartosc in slownik.items():
-            #ent powinno być liczone z ostatniej kolumny dane
-            #z danych liczymy prawdopodobieństwo
-
-
-            #TUTAJ POSPLITUJ TABELĘ, aby policzyć entropie decyzyjnej dla tabeli
             subTab = [row for row in dane if row[index] == klucz]
-            print(f"Podtabela Entropii: {subTab}")
 
+            praw = oblicz_prawdopodobienstwo(wystapienia_kolumn(subTab))
 
-            praw = oblicz_prawdopodobienstwo(wystapienia_kolumn(dane))
-
-            #print(f'HALO {praw}')
             ent = entropia(*praw[len(praw)-1].values())
-            funcInf += wartosc * ent#entropia
-        #rint(f"Wynik a{index}: {funcInf}")
+            funcInf += wartosc * ent
 
         if index == len(praw)-1:
             return wynik
@@ -138,9 +104,6 @@ def funkcja_informacji(praw, dane): #DOBRZE LICZY
         index += 1
 
 
-
-#func_inf = funkcja_informacji(prawdopodobienstwoWszystkichSlowników, tablica_danych)
-
 def gain(ent, inf):
     gain_tab = []
     for gain_elem in inf.values():
@@ -149,17 +112,6 @@ def gain(ent, inf):
         else:
             gain_tab.append(0)
     return gain_tab
-
-
-#print(f"Info: {func_inf}")
-#print(f"EntropD: {entropiaD}")
-#gain = gain(entropiaD, func_inf)
-#print(f"Gain: {gain}")
-#splitInfo = []
-#for i in prawdopodobienstwoWszystkichSlowników:
-   # splitInfo.append(entropia(*i.values()))
-
-#print(f"Split info: {splitInfo}")
 
 def gainRatio(gain,splitInfo):
     gainR = []
@@ -172,24 +124,16 @@ def gainRatio(gain,splitInfo):
         index += 1
     return gainR
 
-
-#Ratio = gainRatio(gain, splitInfo)
-#print(f"GainRatio: {Ratio}")
-
 def indeks_najwyzszej_wartosci(tablica):
     if not tablica:  # Sprawdzanie, czy tablica nie jest pusta
         return None
     indeks = 0
     najwyzsza_wartosc = tablica[0]
     for i in range(1, len(tablica)):
-        if tablica[i] >= najwyzsza_wartosc:
+        if tablica[i] > najwyzsza_wartosc:
             indeks = i
             najwyzsza_wartosc = tablica[i]
     return indeks
-
-#print(f"Index nawyższej wartości: {indeks_najwyzszej_wartosci(Ratio)}")
-
-#index = indeks_najwyzszej_wartosci(Ratio)
 
 def pobierz_klucze_słownika(tablica, indeks_słownika):
     if not tablica or indeks_słownika >= len(tablica):  # Sprawdzenie, czy tablica nie jest pusta i czy indeks jest prawidłowy
@@ -198,36 +142,22 @@ def pobierz_klucze_słownika(tablica, indeks_słownika):
     słownik = tablica[indeks_słownika]
     return list(słownik.keys())
 
-#print(f"Klucze : {pobierz_klucze_słownika(dicArray,index)}")
-
 def licz(dane):
     dicArray = wystapienia_kolumn(dane)
     prawdopodobienstwoWszystkichSlowników = oblicz_prawdopodobienstwo(dicArray)
-
-
-    #TUTAJ problem z prawdopodobieństwem
-
-
-
-    print(prawdopodobienstwoWszystkichSlowników)
-    #print(oblicz_p(dicArray))
     entropiaD = entropia(*prawdopodobienstwoWszystkichSlowników[len(prawdopodobienstwoWszystkichSlowników) - 1].values()) #entropia decyzynjej
-    print(f"Prawdopodobieństwo do Entropii: {prawdopodobienstwoWszystkichSlowników[len(prawdopodobienstwoWszystkichSlowników) - 1].values()}")
+    #print(f"Prawdopodobieństwo do Entropii: {prawdopodobienstwoWszystkichSlowników[len(prawdopodobienstwoWszystkichSlowników) - 1].values()}")
     praw = []
     for i in prawdopodobienstwoWszystkichSlowników:
         ent = entropia(*i.values())
         praw.append(ent)
-    #print(f"Lista prawdopodobieństw:{praw}")
-    print(f"EntropiaD(id{len(prawdopodobienstwoWszystkichSlowników) - 1}): {entropiaD}")
-    func_inf = funkcja_informacji(prawdopodobienstwoWszystkichSlowników, tablica_danych)
-    print(f"Func_inf: {func_inf}")
-   # f1 = funkcja_informacji(oblicz_p(),tablica_danych)
+    #print(f"EntropiaD(id{len(prawdopodobienstwoWszystkichSlowników) - 1}): {entropiaD}")
+    func_inf = funkcja_informacji(prawdopodobienstwoWszystkichSlowników, dane)
     splitInfo = []
     for i in prawdopodobienstwoWszystkichSlowników:
         splitInfo.append(entropia(*i.values()))
 
     g = gain(entropiaD, func_inf)
-    print(f"Gain: {g}\n")
     Ratio = gainRatio(g, splitInfo) #toooo najlepsze Ratio
     index = indeks_najwyzszej_wartosci(Ratio) #toooo index najlepszego ratio
     uniqueValues = pobierz_klucze_słownika(dicArray, index) #tooo wartości uniwersalne węzłów
@@ -238,11 +168,6 @@ def licz(dane):
         "FuncInf": func_inf,
         "Gain": g
     }
-
-
-
-
-licz(tablica_danych)
 
 def createNode(dane, value = None, level = 0):
     n = wezel()
@@ -257,9 +182,8 @@ def createNode(dane, value = None, level = 0):
     infres = wynik["FuncInf"]
     gain = wynik["Gain"]
 
-    if level < 0:
+    if level == 0:
         index = 0
-        print(f"LEVEL: {level}")
         for i in infres:
             print(f"Info(a{index + 1}): {infres[index]}")
             index += 1
@@ -282,9 +206,6 @@ def createNode(dane, value = None, level = 0):
         n.attribute = bestIndex
         for value in uniqueValues:
             subTab = [row for row in dane if row[bestIndex] == value]
-            print(f"Podtabela: ")
-            for row in subTab:
-                print(row)
             child = createNode(subTab, value, level+1)
             n.potomki.append(child)
 

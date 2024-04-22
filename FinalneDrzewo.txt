@@ -1,0 +1,191 @@
+└─  Value: Root -> Level 0, Attribute a6:
+    └─  no -> Level 1, Attribute a5:
+           └─  0-2 -> Level 2, Attribute a4:
+                  └─  30-34 -> Level 3, Attribute a1:
+                         └─  no-recurrence-events -> Level 4, Attribute a7:
+                                └─  3 -> D: no
+                                └─  1 -> D: no
+                                └─  2 -> Level 5, Attribute a9:
+                                       └─  left_low -> D: no
+                                       └─  left_up -> Level 6, Attribute a2:
+                                              └─  30-39 -> D: no
+                                              └─  60-69 -> D: no
+                                              └─  40-49 -> D: yes
+                                       └─  right_low -> D: no
+                                       └─  right_up -> D: yes
+                         └─  recurrence-events -> Level 4, Attribute a9:
+                                └─  ? -> D: no
+                                └─  right_up -> D: no
+                                └─  central -> D: no
+                                └─  left_up -> Level 5, Attribute a2:
+                                       └─  30-39 -> D: no
+                                       └─  50-59 -> D: yes
+                                       └─  60-69 -> D: yes
+                                └─  left_low -> D: yes
+                  └─  20-24 -> Level 3, Attribute a7:
+                         └─  2 -> D: no
+                         └─  1 -> D: no
+                         └─  3 -> Level 4, Attribute a3:
+                                └─  ge40 -> D: no
+                                └─  premeno -> Level 5, Attribute a9:
+                                       └─  central -> D: no
+                                       └─  left_low -> D: yes
+                                       └─  left_up -> D: yes
+                  └─  15-19 -> Level 3, Attribute a9:
+                         └─  left_up -> Level 4, Attribute a2:
+                                └─  60-69 -> Level 5, Attribute a8:
+                                       └─  right -> Level 6, Attribute a7:
+                                              └─  2 -> D: no
+                                              └─  1 -> D: no
+                                              └─  3 -> D: yes
+                                       └─  left -> D: yes
+                                └─  30-39 -> D: no
+                                └─  40-49 -> D: no
+                         └─  left_low -> D: no
+                         └─  central -> D: no
+                         └─  right_low -> D: no
+                         └─  right_up -> D: no
+                  └─  0-4 -> D: no
+                  └─  25-29 -> Level 3, Attribute a2:
+                         └─  50-59 -> Level 4, Attribute a1:
+                                └─  no-recurrence-events -> D: no
+                                └─  recurrence-events -> Level 5, Attribute a7:
+                                       └─  2 -> D: no
+                                       └─  1 -> D: no
+                                       └─  3 -> D: yes
+                         └─  30-39 -> D: no
+                         └─  40-49 -> Level 4, Attribute a3:
+                                └─  premeno -> Level 5, Attribute a9:
+                                       └─  left_up -> Level 6, Attribute a1:
+                                              └─  no-recurrence-events -> Level 7, Attribute a7:
+                                                     └─  2 -> Level 8, Attribute a8:
+                                                            └─  left -> D: no
+                                                            └─  right -> D: no
+                                                     └─  3 -> D: yes
+                                              └─  recurrence-events -> D: no
+                                       └─  left_low -> Level 6, Attribute a7:
+                                              └─  2 -> Level 7, Attribute a8:
+                                                     └─  right -> D: no
+                                                     └─  left -> D: yes
+                                              └─  1 -> D: yes
+                                       └─  right_low -> D: no
+                                       └─  central -> D: no
+                                       └─  right_up -> D: no
+                                └─  ge40 -> D: no
+                         └─  60-69 -> Level 4, Attribute a9:
+                                └─  left_up -> D: no
+                                └─  left_low -> D: no
+                                └─  right_low -> D: yes
+                  └─  50-54 -> Level 3, Attribute a8:
+                         └─  left -> D: no
+                         └─  right -> Level 4, Attribute a7:
+                                └─  1 -> D: no
+                                └─  2 -> D: yes
+                                └─  3 -> D: no
+                  └─  10-14 -> Level 3, Attribute a7:
+                         └─  1 -> D: no
+                         └─  3 -> D: no
+                         └─  2 -> Level 4, Attribute a2:
+                                └─  40-49 -> Level 5, Attribute a8:
+                                       └─  left -> Level 6, Attribute a9:
+                                              └─  left_low -> D: no
+                                              └─  left_up -> D: no
+                                       └─  right -> D: no
+                                └─  50-59 -> D: no
+                                └─  70-79 -> D: no
+                                └─  60-69 -> Level 5, Attribute a8:
+                                       └─  right -> D: yes
+                                       └─  left -> D: no
+                                └─  30-39 -> D: no
+                  └─  40-44 -> Level 3, Attribute a2:
+                         └─  50-59 -> D: no
+                         └─  40-49 -> D: no
+                         └─  70-79 -> D: no
+                         └─  30-39 -> Level 4, Attribute a9:
+                                └─  right_up -> D: no
+                                └─  left_low -> D: yes
+                                └─  left_up -> D: no
+                         └─  60-69 -> D: no
+                  └─  35-39 -> D: no
+                  └─  5-9 -> Level 3, Attribute a2:
+                         └─  60-69 -> D: no
+                         └─  50-59 -> D: no
+                         └─  30-39 -> D: no
+                         └─  40-49 -> D: yes
+                  └─  45-49 -> D: yes
+           └─  6-8 -> Level 2, Attribute a9:
+                  └─  left_up -> D: no
+                  └─  left_low -> D: yes
+           └─  3-5 -> Level 2, Attribute a4:
+                  └─  20-24 -> Level 3, Attribute a1:
+                         └─  no-recurrence-events -> D: no
+                         └─  recurrence-events -> D: yes
+                  └─  40-44 -> D: yes
+                  └─  25-29 -> Level 3, Attribute a1:
+                         └─  no-recurrence-events -> D: yes
+                         └─  recurrence-events -> D: no
+                  └─  10-14 -> D: no
+                  └─  30-34 -> Level 3, Attribute a2:
+                         └─  40-49 -> D: no
+                         └─  30-39 -> D: yes
+                         └─  50-59 -> D: no
+           └─  15-17 -> D: no
+           └─  12-14 -> D: yes
+           └─  9-11 -> D: yes
+    └─  yes -> Level 1, Attribute a5:
+           └─  6-8 -> Level 2, Attribute a4:
+                  └─  30-34 -> Level 3, Attribute a1:
+                         └─  no-recurrence-events -> D: no
+                         └─  recurrence-events -> Level 4, Attribute a7:
+                                └─  3 -> D: no
+                                └─  2 -> D: yes
+                  └─  25-29 -> D: yes
+                  └─  45-49 -> D: no
+                  └─  15-19 -> D: yes
+                  └─  35-39 -> D: no
+                  └─  10-14 -> D: yes
+                  └─  40-44 -> D: yes
+           └─  0-2 -> Level 2, Attribute a4:
+                  └─  25-29 -> D: no
+                  └─  35-39 -> D: yes
+                  └─  20-24 -> D: no
+                  └─  50-54 -> D: yes
+                  └─  15-19 -> Level 3, Attribute a1:
+                         └─  no-recurrence-events -> D: yes
+                         └─  recurrence-events -> D: no
+                  └─  30-34 -> Level 3, Attribute a2:
+                         └─  40-49 -> D: no
+                         └─  60-69 -> D: yes
+           └─  9-11 -> Level 2, Attribute a1:
+                  └─  no-recurrence-events -> D: yes
+                  └─  recurrence-events -> Level 3, Attribute a3:
+                         └─  premeno -> D: no
+                         └─  ge40 -> D: yes
+           └─  3-5 -> Level 2, Attribute a3:
+                  └─  premeno -> Level 3, Attribute a7:
+                         └─  3 -> D: yes
+                         └─  2 -> Level 4, Attribute a4:
+                                └─  20-24 -> Level 5, Attribute a8:
+                                       └─  left -> Level 6, Attribute a2:
+                                              └─  50-59 -> D: no
+                                              └─  30-39 -> D: no
+                                              └─  40-49 -> D: yes
+                                       └─  right -> D: yes
+                                └─  30-34 -> Level 5, Attribute a2:
+                                       └─  50-59 -> D: yes
+                                       └─  40-49 -> D: no
+                                └─  25-29 -> D: yes
+                  └─  ge40 -> Level 3, Attribute a9:
+                         └─  left_low -> D: no
+                         └─  left_up -> D: no
+                         └─  right_up -> D: no
+                         └─  central -> D: yes
+           └─  15-17 -> Level 2, Attribute a7:
+                  └─  3 -> D: no
+                  └─  2 -> D: yes
+           └─  12-14 -> D: yes
+           └─  24-26 -> D: yes
+    └─  ? -> Level 1, Attribute a3:
+           └─  premeno -> D: yes
+           └─  ge40 -> D: yes
+           └─  lt40 -> D: no 
